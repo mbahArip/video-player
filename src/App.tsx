@@ -6,6 +6,12 @@ function App() {
 	const videoPlayer = useRef<ReactPlayer>(null);
 
 	useEffect(() => {
+		const { search } = window.location;
+		const urlQuery = search.split('url=')[1];
+		if (urlQuery) setVidURL(urlQuery);
+	}, []);
+
+	useEffect(() => {
 		console.log(videoPlayer.current);
 	}, [vidURL]);
 
