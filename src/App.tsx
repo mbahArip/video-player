@@ -10,6 +10,20 @@ function App() {
 	const [duration, setDuration] = useState<number | string>();
 
 	useEffect(() => {
+		const { search } = window.location;
+		const urlQuery = search.split('url=')[1];
+		if (urlQuery) {
+			setVidURL(urlQuery);
+			setShowInput(false);
+		}
+
+		const timer = setTimeout(() => {
+			let vidElement: HTMLVideoElement | null = document.querySelector('video');
+			if (!vidElement) return;
+			vidElement.play();
+			// vidElement.focus();
+		}, 500);
+
 		document.addEventListener('keydown', (e) => {
 			if (!videoPlayer.current) return;
 			if (e.key === 'ArrowRight') {
@@ -24,20 +38,18 @@ function App() {
 					'seconds'
 				);
 			}
+			// console.log(e);
+			if (e.key === ' ') {
+				let vidElement: HTMLVideoElement | null =
+					document.querySelector('video');
+				if (!vidElement) return;
+				if (vidElement.paused) {
+					vidElement.play();
+				} else {
+					vidElement.pause();
+				}
+			}
 		});
-		const { search } = window.location;
-		const urlQuery = search.split('url=')[1];
-		if (urlQuery) {
-			setVidURL(urlQuery);
-			setShowInput(false);
-		}
-
-		const timer = setTimeout(() => {
-			let vidElement: HTMLVideoElement | null = document.querySelector('video');
-			if (!vidElement) return;
-			vidElement.play();
-			// vidElement.focus();
-		}, 500);
 
 		return () => {
 			clearTimeout(timer);
