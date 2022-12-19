@@ -24,7 +24,7 @@ function App() {
 			<ReactPlayer
 				url={vidURL}
 				controls
-				pip
+				muted
 				playing
 				config={{ file: { forceVideo: true } }}
 				height={640}
