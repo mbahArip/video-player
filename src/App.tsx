@@ -26,13 +26,13 @@ function App() {
 
 		document.addEventListener('keydown', (e) => {
 			if (!videoPlayer.current) return;
-			if (e.key === 'ArrowRight') {
+			if (e.key === 'ArrowRight' || e.key === 'd') {
 				videoPlayer.current.seekTo(
 					videoPlayer.current.getCurrentTime() + 2,
 					'seconds'
 				);
 			}
-			if (e.key === 'ArrowLeft') {
+			if (e.key === 'ArrowLeft' || e.key === 'a') {
 				videoPlayer.current.seekTo(
 					videoPlayer.current.getCurrentTime() - 2,
 					'seconds'
