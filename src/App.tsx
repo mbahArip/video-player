@@ -22,6 +22,7 @@ function App() {
 			if (!vidElement) return;
 			vidElement.play();
 			vidElement.requestFullscreen();
+			vidElement.focus();
 		}, 500);
 
 		return () => {
