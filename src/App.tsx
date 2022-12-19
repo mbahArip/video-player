@@ -21,7 +21,17 @@ function App() {
 			let vidElement: HTMLVideoElement | null = document.querySelector('video');
 			if (!vidElement) return;
 			vidElement.play();
-			vidElement.requestFullscreen();
+			if (vidElement.requestFullscreen) {
+				vidElement.requestFullscreen();
+				//@ts-ignore
+			} else if (vidElement.mozRequestFullScreen) {
+				//@ts-ignore
+				vidElement.mozRequestFullScreen();
+				//@ts-ignore
+			} else if (vidElement.webkitRequestFullscreen) {
+				//@ts-ignore
+				vidElement.webkitRequestFullscreen();
+			}
 			vidElement.focus();
 		}, 500);
 
