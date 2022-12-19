@@ -51,8 +51,8 @@ function App() {
 				controls
 				playing
 				config={{ file: { forceVideo: true } }}
-				height={640}
-				width={920}
+				height={'100vh'}
+				width={'100vw'}
 			/>
 			{showInput && (
 				<input
