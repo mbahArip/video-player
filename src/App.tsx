@@ -26,13 +26,37 @@ function App() {
 			if (!videoPlayer.current) return;
 			if (e.key === 'ArrowRight' || e.key === 'd') {
 				videoPlayer.current.seekTo(
-					videoPlayer.current.getCurrentTime() + 2,
+					videoPlayer.current.getCurrentTime() + 2.5,
 					'seconds'
 				);
 			}
 			if (e.key === 'ArrowLeft' || e.key === 'a') {
 				videoPlayer.current.seekTo(
-					videoPlayer.current.getCurrentTime() - 2,
+					videoPlayer.current.getCurrentTime() - 2.5,
+					'seconds'
+				);
+			}
+			if (e.key === 'e') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() + 1,
+					'seconds'
+				);
+			}
+			if (e.key === 'q') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() - 1,
+					'seconds'
+				);
+			}
+			if (e.key === 'c') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() + 5,
+					'seconds'
+				);
+			}
+			if (e.key === 'z') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() - 5,
 					'seconds'
 				);
 			}
