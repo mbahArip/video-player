@@ -4,7 +4,6 @@ import format from 'format-duration';
 
 function App() {
 	const [vidURL, setVidURL] = useState<string>('');
-	const [showInput, setShowInput] = useState<boolean>(true);
 	const videoPlayer = useRef<ReactPlayer>(null);
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
@@ -14,7 +13,6 @@ function App() {
 		const urlQuery = search.split('url=')[1];
 		if (urlQuery) {
 			setVidURL(urlQuery);
-			setShowInput(false);
 		}
 
 		const timer = setTimeout(() => {
@@ -73,7 +71,7 @@ function App() {
 	}, 500);
 
 	return (
-		<div className="w-screen min-h-screen bg-zinc-900 m-0 p-2 flex flex-col items-center justify-center gap-8">
+		<div className="w-screen h-screen bg-zinc-900 m-0 p-0 flex flex-col items-center justify-center gap-8">
 			<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
 				{currentTime} / {duration}
 			</div>
@@ -87,16 +85,6 @@ function App() {
 				height={'100vh'}
 				width={'100vw'}
 			/>
-			{showInput && (
-				<input
-					value={vidURL}
-					placeholder="Video URL"
-					className="w-96 rounded p-2"
-					onChange={(e) => {
-						setVidURL(e.currentTarget.value);
-					}}
-				/>
-			)}
 		</div>
 	);
 }
