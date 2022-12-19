@@ -7,12 +7,25 @@ function App() {
 	const videoPlayer = useRef<ReactPlayer>(null);
 
 	useEffect(() => {
+		document.addEventListener('mousedown', (e) => {
+			console.log(e);
+		});
 		const { search } = window.location;
 		const urlQuery = search.split('url=')[1];
 		if (urlQuery) {
 			setVidURL(urlQuery);
 			setShowInput(false);
 		}
+
+		const timer = setTimeout(() => {
+			let vidElement: HTMLVideoElement | null = document.querySelector('video');
+			if (!vidElement) return;
+			vidElement.play();
+		}, 500);
+
+		return () => {
+			clearTimeout(timer);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -24,7 +37,6 @@ function App() {
 			<ReactPlayer
 				url={vidURL}
 				controls
-				muted
 				playing
 				config={{ file: { forceVideo: true } }}
 				height={640}
