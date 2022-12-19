@@ -21,6 +21,7 @@ function App() {
 			let vidElement: HTMLVideoElement | null = document.querySelector('video');
 			if (!vidElement) return;
 			vidElement.play();
+			vidElement.requestFullscreen();
 		}, 500);
 
 		return () => {
