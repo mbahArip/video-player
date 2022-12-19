@@ -3,12 +3,16 @@ import ReactPlayer from 'react-player';
 
 function App() {
 	const [vidURL, setVidURL] = useState<string>('');
+	const [showInput, setShowInput] = useState<boolean>(true);
 	const videoPlayer = useRef<ReactPlayer>(null);
 
 	useEffect(() => {
 		const { search } = window.location;
 		const urlQuery = search.split('url=')[1];
-		if (urlQuery) setVidURL(urlQuery);
+		if (urlQuery) {
+			setVidURL(urlQuery);
+			setShowInput(false);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -19,20 +23,23 @@ function App() {
 		<div className="w-screen min-h-screen bg-zinc-900 m-0 p-2 flex flex-col items-center justify-center gap-8">
 			<ReactPlayer
 				url={vidURL}
-				light
 				controls
 				pip
 				playing
 				config={{ file: { forceVideo: true } }}
+				height={640}
+				width={920}
 			/>
-			<input
-				value={vidURL}
-				placeholder="Video URL"
-				className="w-96 rounded p-2"
-				onChange={(e) => {
-					setVidURL(e.currentTarget.value);
-				}}
-			/>
+			{showInput && (
+				<input
+					value={vidURL}
+					placeholder="Video URL"
+					className="w-96 rounded p-2"
+					onChange={(e) => {
+						setVidURL(e.currentTarget.value);
+					}}
+				/>
+			)}
 		</div>
 	);
 }
