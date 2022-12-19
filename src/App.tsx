@@ -1,14 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
+import format from 'format-duration';
 
 function App() {
 	const [vidURL, setVidURL] = useState<string>('');
 	const [showInput, setShowInput] = useState<boolean>(true);
 	const videoPlayer = useRef<ReactPlayer>(null);
+	const [currentTime, setCurrentTime] = useState<number | string>();
+	const [duration, setDuration] = useState<number | string>();
 
 	useEffect(() => {
-		document.addEventListener('mousedown', (e) => {
-			console.log(e);
+		document.addEventListener('keydown', (e) => {
+			if (!videoPlayer.current) return;
+			if (e.key === 'ArrowRight') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() + 2,
+					'seconds'
+				);
+			}
+			if (e.key === 'ArrowLeft') {
+				videoPlayer.current.seekTo(
+					videoPlayer.current.getCurrentTime() - 2,
+					'seconds'
+				);
+			}
 		});
 		const { search } = window.location;
 		const urlQuery = search.split('url=')[1];
@@ -21,18 +36,7 @@ function App() {
 			let vidElement: HTMLVideoElement | null = document.querySelector('video');
 			if (!vidElement) return;
 			vidElement.play();
-			if (vidElement.requestFullscreen) {
-				vidElement.requestFullscreen();
-				//@ts-ignore
-			} else if (vidElement.mozRequestFullScreen) {
-				//@ts-ignore
-				vidElement.mozRequestFullScreen();
-				//@ts-ignore
-			} else if (vidElement.webkitRequestFullscreen) {
-				//@ts-ignore
-				vidElement.webkitRequestFullscreen();
-			}
-			vidElement.focus();
+			// vidElement.focus();
 		}, 500);
 
 		return () => {
@@ -44,12 +48,29 @@ function App() {
 		console.log(videoPlayer.current);
 	}, [vidURL]);
 
+	setInterval(() => {
+		if (!videoPlayer.current) return;
+		const current = format(
+			Math.round(videoPlayer.current.getCurrentTime()) * 1000
+		);
+		const duration = format(
+			Math.round(videoPlayer.current.getDuration()) * 1000
+		);
+		setCurrentTime(current);
+		setDuration(duration);
+	}, 500);
+
 	return (
 		<div className="w-screen min-h-screen bg-zinc-900 m-0 p-2 flex flex-col items-center justify-center gap-8">
+			<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
+				{currentTime} / {duration}
+			</div>
 			<ReactPlayer
+				ref={videoPlayer}
 				url={vidURL}
 				controls
 				playing
+				loop={false}
 				config={{ file: { forceVideo: true } }}
 				height={'100vh'}
 				width={'100vw'}
