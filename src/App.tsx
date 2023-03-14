@@ -83,7 +83,7 @@ function App() {
 				let vidElement: HTMLVideoElement | null =
 					document.querySelector('video');
 				if (!vidElement) return;
-				if (vidElement.volume < 1) {
+				if (vidElement.volume > 0) {
 					vidElement.volume -= 0.05;
 				}
 			}
@@ -91,7 +91,7 @@ function App() {
 				let vidElement: HTMLVideoElement | null =
 					document.querySelector('video');
 				if (!vidElement) return;
-				if (vidElement.volume > 0) {
+				if (vidElement.volume < 1) {
 					vidElement.volume += 0.05;
 				}
 			}
