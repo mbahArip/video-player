@@ -95,6 +95,29 @@ function App() {
 					vidElement.volume += 0.05;
 				}
 			}
+			if (e.key === 'f') {
+				let vidElement: HTMLVideoElement | null =
+					document.querySelector('video');
+				if (!vidElement) return;
+				if (vidElement.requestFullscreen) {
+					vidElement.requestFullscreen();
+					// @ts-expect-error
+				} else if (vidElement.mozRequestFullScreen) {
+					/* Firefox */
+					// @ts-expect-error
+					vidElement.mozRequestFullScreen();
+					// @ts-expect-error
+				} else if (vidElement.webkitRequestFullscreen) {
+					/* Chrome, Safari & Opera */
+					// @ts-expect-error
+					vidElement.webkitRequestFullscreen();
+					// @ts-expect-error
+				} else if (vidElement.msRequestFullscreen) {
+					/* IE/Edge */
+					// @ts-expect-error
+					vidElement.msRequestFullscreen();
+				}
+			}
 		});
 
 		return () => {
