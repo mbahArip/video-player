@@ -6,7 +6,7 @@ function App() {
 	const searchParams = new URLSearchParams(window.location.search);
 	const url = searchParams.get('url');
 
-	const [vidURL, setVidURL] = useState<string>('/siapa.mp4');
+	const [vidURL, setVidURL] = useState<string>(url || '');
 	const videoPlayer = useRef<ReactPlayer>(null);
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
