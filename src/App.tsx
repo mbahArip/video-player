@@ -3,10 +3,17 @@ import ReactPlayer from 'react-player';
 import format from 'format-duration';
 
 function App() {
-	const [vidURL, setVidURL] = useState<string>('');
+	const searchParams = new URLSearchParams(window.location.search);
+	const url = searchParams.get('url');
+
+	const [vidURL, setVidURL] = useState<string>(url || '');
 	const videoPlayer = useRef<ReactPlayer>(null);
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
+
+	const validExtensions = ['mp4', 'm4v', 'mov'];
+	const fileExtension = url?.split('.').pop();
+	const isValidExtension = validExtensions.includes(fileExtension || '');
 
 	useEffect(() => {
 		const { search } = window.location;
@@ -78,9 +85,9 @@ function App() {
 		};
 	}, []);
 
-	useEffect(() => {
-		console.log(videoPlayer.current);
-	}, [vidURL]);
+	// useEffect(() => {
+	// 	console.log(videoPlayer.current);
+	// }, [vidURL]);
 
 	setInterval(() => {
 		if (!videoPlayer.current) return;
@@ -96,19 +103,30 @@ function App() {
 
 	return (
 		<div className="w-screen h-screen bg-zinc-900 m-0 p-0 flex flex-col items-center justify-center gap-8">
-			<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
-				{currentTime} / {duration}
-			</div>
-			<ReactPlayer
-				ref={videoPlayer}
-				url={vidURL}
-				controls
-				playing
-				loop={false}
-				config={{ file: { forceVideo: true } }}
-				height={'100vh'}
-				width={'100vw'}
-			/>
+			{isValidExtension ? (
+				<>
+					<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
+						{currentTime} / {duration}
+					</div>
+					<ReactPlayer
+						ref={videoPlayer}
+						url={vidURL}
+						controls
+						playing
+						loop={false}
+						config={{ file: { forceVideo: true } }}
+						height={'100vh'}
+						width={'100vw'}
+						onError={(err) => {
+							console.log(err);
+						}}
+					/>
+				</>
+			) : (
+				<p>
+					Invalid file extension. Please provide a valid mp4, m4v, or mov file.
+				</p>
+			)}
 		</div>
 	);
 }
