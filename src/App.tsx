@@ -6,7 +6,9 @@ function App() {
 	const searchParams = new URLSearchParams(window.location.search);
 	const url = searchParams.get('url');
 
-	const [vidURL, setVidURL] = useState<string>(url || '');
+	const [vidURL, setVidURL] = useState<string>(
+		'https://cdn.mbaharip.com/api?path=/siapa.mp4&raw=true'
+	);
 	const videoPlayer = useRef<ReactPlayer>(null);
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
@@ -123,7 +125,7 @@ function App() {
 					/>
 				</>
 			) : (
-				<p>
+				<p className="text-white">
 					Invalid file extension. Please provide a valid mp4, m4v, or mov file.
 				</p>
 			)}
