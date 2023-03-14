@@ -6,9 +6,7 @@ function App() {
 	const searchParams = new URLSearchParams(window.location.search);
 	const url = searchParams.get('url');
 
-	const [vidURL, setVidURL] = useState<string>(
-		'https://cdn.mbaharip.com/api?path=/siapa.mp4&raw=true'
-	);
+	const [vidURL, setVidURL] = useState<string>('/siapa.mp4');
 	const videoPlayer = useRef<ReactPlayer>(null);
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
@@ -78,6 +76,23 @@ function App() {
 					vidElement.play();
 				} else {
 					vidElement.pause();
+				}
+			}
+
+			if (e.key === 's') {
+				let vidElement: HTMLVideoElement | null =
+					document.querySelector('video');
+				if (!vidElement) return;
+				if (vidElement.volume < 1) {
+					vidElement.volume -= 0.05;
+				}
+			}
+			if (e.key === 'w') {
+				let vidElement: HTMLVideoElement | null =
+					document.querySelector('video');
+				if (!vidElement) return;
+				if (vidElement.volume > 0) {
+					vidElement.volume += 0.05;
 				}
 			}
 		});
