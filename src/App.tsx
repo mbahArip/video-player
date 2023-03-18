@@ -11,10 +11,6 @@ function App() {
 	const [currentTime, setCurrentTime] = useState<number | string>();
 	const [duration, setDuration] = useState<number | string>();
 
-	const validExtensions = ['mp4', 'm4v', 'mov'];
-	const fileExtension = url?.split('.').pop();
-	const isValidExtension = validExtensions.includes(fileExtension || '');
-
 	useEffect(() => {
 		const { search } = window.location;
 		const urlQuery = search.split('url=')[1];
@@ -143,30 +139,22 @@ function App() {
 
 	return (
 		<div className="w-screen h-screen bg-zinc-900 m-0 p-0 flex flex-col items-center justify-center gap-8">
-			{isValidExtension ? (
-				<>
-					<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
-						{currentTime} / {duration}
-					</div>
-					<ReactPlayer
-						ref={videoPlayer}
-						url={vidURL}
-						controls
-						playing
-						loop={false}
-						config={{ file: { forceVideo: true } }}
-						height={'100vh'}
-						width={'100vw'}
-						onError={(err) => {
-							console.log(err);
-						}}
-					/>
-				</>
-			) : (
-				<p className="text-white">
-					Invalid file extension. Please provide a valid mp4, m4v, or mov file.
-				</p>
-			)}
+			<div className="fixed right-4 top-4 bg-white px-2 py-1 rounded-lg">
+				{currentTime} / {duration}
+			</div>
+			<ReactPlayer
+				ref={videoPlayer}
+				url={vidURL}
+				controls
+				playing
+				loop={false}
+				config={{ file: { forceVideo: true } }}
+				height={'100vh'}
+				width={'100vw'}
+				onError={(err) => {
+					console.log(err);
+				}}
+			/>
 		</div>
 	);
 }
