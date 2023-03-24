@@ -154,6 +154,7 @@ function App() {
 				onError={(err) => {
 					console.log(err);
 				}}
+				volume={0.5}
 			/>
 		</div>
 	);
